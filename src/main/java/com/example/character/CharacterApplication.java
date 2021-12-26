@@ -1,13 +1,13 @@
-package com.example.anime_characters;
+package com.example.character;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AnimeCharactersApplication {
+public class CharacterApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AnimeCharactersApplication.class, args);
+        SpringApplication.run(CharacterApplication.class, args);
     }
 
 }
