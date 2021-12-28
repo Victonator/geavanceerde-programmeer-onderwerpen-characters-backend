@@ -9,7 +9,9 @@ import java.util.List;
 @Repository
 public interface AnimeCharacterRepository extends MongoRepository<AnimeCharacter, String> {
 
-    AnimeCharacter findCharacterByNameContaining(String name);
-    AnimeCharacter findCharacterById(String id);
-    List<AnimeCharacter> findCharactersByGender(int Gender);
+    AnimeCharacter findAnimeCharacterByNameEquals(String name);
+    AnimeCharacter findCharacterById(String Id);
+    AnimeCharacter findCharacterByAnimeIdAndName(int animeId,String name);
+    List<AnimeCharacter> findCharactersByGender(int gender);
+    List<AnimeCharacter> findCharactersByAnimeId(int animeId);
 }

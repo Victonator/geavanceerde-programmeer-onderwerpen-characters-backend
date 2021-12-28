@@ -1,6 +1,7 @@
 package com.example.character.controller;
 
 
+
 import com.example.character.model.AnimeCharacter;
 import com.example.character.repository.AnimeCharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class AnimeCharacterController {
@@ -24,25 +24,23 @@ public class AnimeCharacterController {
         if (animeCharacterRepository.count() == 0) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM");
             LocalDate date = LocalDate.now();
-            animeCharacterRepository.save(new AnimeCharacter("Mikasa Ackerman", 0, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter("Naruto Uzumaki", 1, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter("Izuku Midoriya", 1, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter("Sakura Haruno", 0, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter("Eren Yeager", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter(1,"Mikasa Ackerman", 0, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter(2,"Naruto Uzumaki", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter(3,"Izuku Midoriya", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter(2,"Sakura Haruno", 0, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter(1,"Eren Yeager", 1, dtf.format(date)));
 
         }
-
-        System.out.println(animeCharacterRepository);
     }
 
-    @GetMapping("/characters")
-    public List<AnimeCharacter> getCharacters() {
-        return animeCharacterRepository.findAll();
-    }
 
     @GetMapping("/characters/{name}")
     public AnimeCharacter getCharacterByName(@PathVariable String name) {
-        return animeCharacterRepository.findCharacterByNameContaining(name);
+        return animeCharacterRepository.findAnimeCharacterByNameEquals(name);
+    }
+    @GetMapping("/characters/anime/{animeId}")
+    public List<AnimeCharacter> getCharacterByAnime(@PathVariable int animeId) {
+        return animeCharacterRepository.findCharactersByAnimeId(animeId);
     }
 
     @GetMapping("/characters/gender/{gender}")
@@ -59,7 +57,7 @@ public class AnimeCharacterController {
     }
 
     @PutMapping("/characters")
-    public AnimeCharacter updatecharacter(@RequestBody AnimeCharacter updatedCharacter) {
+    public AnimeCharacter updateCharacter(@RequestBody AnimeCharacter updatedCharacter) {
         AnimeCharacter retrievedCharacter = animeCharacterRepository.findCharacterById(updatedCharacter.getId());
 
         retrievedCharacter.setName(updatedCharacter.getName());
@@ -71,9 +69,9 @@ public class AnimeCharacterController {
         return retrievedCharacter;
     }
 
-    @DeleteMapping("/characters/{Id}")
-    public ResponseEntity deletecharacter(@PathVariable String Id) {
-        AnimeCharacter character = animeCharacterRepository.findCharacterById(Id);
+    @DeleteMapping("/characters/{id}")
+    public ResponseEntity deleteCharacter(@PathVariable String id) {
+        AnimeCharacter character = animeCharacterRepository.findCharacterById(id);
         if (character != null) {
             animeCharacterRepository.delete(character);
             return ResponseEntity.ok().build();
