@@ -64,6 +64,9 @@ public class AnimeCharacterControllerIntegrationTest {
     private
     ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     * Test of getCharacterByAnimeId.
+     */
     @Test
     public void givenCharacter_whenGetCharactersByAnimeId_thenReturnJsonCharacters() throws Exception {
 
@@ -85,6 +88,9 @@ public class AnimeCharacterControllerIntegrationTest {
                 .andExpect(jsonPath("$.[1].birthday", is("14/10")));
     }
 
+    /**
+     * Test of getCharacterByName.
+     */
     @Test
     public void givenCharacter_whenGetcharactersByName_thenReturnJsonCharacters() throws Exception {
 
@@ -100,6 +106,9 @@ public class AnimeCharacterControllerIntegrationTest {
                 .andExpect(jsonPath("$.birthday", is("12/08")));
     }
 
+    /**
+     * Test of getCharacterByName.
+     */
     @Test
     public void givenCharacter_whenGetCharactersByGender_thenReturnJsonCharacter() throws Exception {
 
@@ -121,6 +130,9 @@ public class AnimeCharacterControllerIntegrationTest {
                 .andExpect(jsonPath("$.[1].birthday",is("14/10")));
     }
 
+    /**
+     * Test of postCharacter.
+     */
     @Test
     public void whenPostCharacter_thenReturnJsonCharacter() throws Exception {
         AnimeCharacter animeCharacter5 = new AnimeCharacter(3,"Test5",1,"15/05");
@@ -136,6 +148,9 @@ public class AnimeCharacterControllerIntegrationTest {
                 .andExpect(jsonPath("$.birthday",is("15/05")));
     }
 
+    /**
+     * Test of putCharacter.
+     */
     @Test
     public void givencharacter_whenPutcharacter_thenReturnJsoncharacter() throws Exception {
 
@@ -153,6 +168,9 @@ public class AnimeCharacterControllerIntegrationTest {
                 .andExpect(jsonPath("$.birthday",is("16/05")));
     }
 
+    /**
+     * Test of deleteCharacter.
+     */
     @Test
     public void givencharacter_whenDeletecharacter_thenStatusOk() throws Exception {
 
@@ -161,6 +179,10 @@ public class AnimeCharacterControllerIntegrationTest {
                 .andExpect(status().isOk());
     }
 
+
+    /**
+     * Test of deleteCharacter when no Character given.
+     */
     @Test
     public void givenNocharacter_whenDeletecharacter_thenStatusNotFound() throws Exception {
 
