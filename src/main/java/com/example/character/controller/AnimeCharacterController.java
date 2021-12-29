@@ -60,6 +60,7 @@ public class AnimeCharacterController {
     public AnimeCharacter updateCharacter(@RequestBody AnimeCharacter updatedCharacter) {
         AnimeCharacter retrievedCharacter = animeCharacterRepository.findCharacterById(updatedCharacter.getId());
 
+        retrievedCharacter.setAnimeId(updatedCharacter.getAnimeId());
         retrievedCharacter.setName(updatedCharacter.getName());
         retrievedCharacter.setGender(updatedCharacter.getGender());
         retrievedCharacter.setBirthday(updatedCharacter.getBirthday());
