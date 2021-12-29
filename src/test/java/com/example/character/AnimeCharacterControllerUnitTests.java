@@ -34,7 +34,7 @@ class AnimeCharacterControllerUnitTests {
 
 
     /**
-     * Test of getAllCharacters.
+     * Test of getCharacterByAnimeId.
      */
     @Test
     public void givenCharacter_whenGetCharactersByAnimeId_thenReturnJsonCharacters() throws Exception {
@@ -111,7 +111,6 @@ class AnimeCharacterControllerUnitTests {
     /**
      * Test of postCharacter.
      */
-
     @Test
     public void whenPostCharacter_thenReturnJsonCharacter() throws Exception{
         AnimeCharacter animeCharacter = new AnimeCharacter(1,"Test",1,"12/08");
