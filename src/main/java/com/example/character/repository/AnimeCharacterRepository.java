@@ -11,7 +11,6 @@ public interface AnimeCharacterRepository extends MongoRepository<AnimeCharacter
 
     AnimeCharacter findAnimeCharacterByNameEquals(String name);
     AnimeCharacter findCharacterById(String Id);
-    AnimeCharacter findCharacterByAnimeIdAndName(int animeId,String name);
     List<AnimeCharacter> findCharactersByGender(int gender);
-    List<AnimeCharacter> findCharactersByAnimeId(int animeId);
+    List<AnimeCharacter> findCharactersByAnimeName(String animeName);
 }

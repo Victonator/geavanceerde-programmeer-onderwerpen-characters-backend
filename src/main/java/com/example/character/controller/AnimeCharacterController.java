@@ -24,11 +24,11 @@ public class AnimeCharacterController {
         if (animeCharacterRepository.count() == 0) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM");
             LocalDate date = LocalDate.now();
-            animeCharacterRepository.save(new AnimeCharacter(1,"Mikasa Ackerman", 0, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter(2,"Naruto Uzumaki", 1, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter(3,"Izuku Midoriya", 1, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter(2,"Sakura Haruno", 0, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter(1,"Eren Yeager", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Attack on Titan","Mikasa Ackerman", 0, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Naruto","Naruto Uzumaki", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("My Hero Academia","Izuku Midoriya", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Naruto","Sakura Haruno", 0, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Attack on Titan","Eren Yeager", 1, dtf.format(date)));
 
         }
     }
@@ -38,9 +38,9 @@ public class AnimeCharacterController {
     public AnimeCharacter getCharacterByName(@PathVariable String name) {
         return animeCharacterRepository.findAnimeCharacterByNameEquals(name);
     }
-    @GetMapping("/characters/anime/{animeId}")
-    public List<AnimeCharacter> getCharacterByAnime(@PathVariable int animeId) {
-        return animeCharacterRepository.findCharactersByAnimeId(animeId);
+    @GetMapping("/characters/anime/{animeName}")
+    public List<AnimeCharacter> getCharacterByAnime(@PathVariable String animeName) {
+        return animeCharacterRepository.findCharactersByAnimeName(animeName);
     }
 
     @GetMapping("/characters/gender/{gender}")
@@ -60,7 +60,7 @@ public class AnimeCharacterController {
     public AnimeCharacter updateCharacter(@RequestBody AnimeCharacter updatedCharacter) {
         AnimeCharacter retrievedCharacter = animeCharacterRepository.findCharacterById(updatedCharacter.getId());
 
-        retrievedCharacter.setAnimeId(updatedCharacter.getAnimeId());
+        retrievedCharacter.setanimeName(updatedCharacter.getanimeName());
         retrievedCharacter.setName(updatedCharacter.getName());
         retrievedCharacter.setGender(updatedCharacter.getGender());
         retrievedCharacter.setBirthday(updatedCharacter.getBirthday());

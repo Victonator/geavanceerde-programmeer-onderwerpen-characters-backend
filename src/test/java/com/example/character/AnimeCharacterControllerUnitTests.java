@@ -34,28 +34,28 @@ class AnimeCharacterControllerUnitTests {
 
 
     /**
-     * Test of getCharacterByAnimeId.
+     * Test of getCharacterByanimeName.
      */
     @Test
-    public void givenCharacter_whenGetCharactersByAnimeId_thenReturnJsonCharacters() throws Exception {
-        AnimeCharacter animeCharacter = new AnimeCharacter(1,"Test",1,"12/08");
-        AnimeCharacter animeCharacter2 = new AnimeCharacter(1,"Test2",0,"14/03");
+    public void givenCharacter_whenGetCharactersByAnimeName_thenReturnJsonCharacters() throws Exception {
+        AnimeCharacter animeCharacter = new AnimeCharacter("TestSerie","Test",1,"12/08");
+        AnimeCharacter animeCharacter2 = new AnimeCharacter("TestSerie2","Test2",0,"14/03");
 
 
         List<AnimeCharacter> animeCharacterList = new ArrayList<>();
         animeCharacterList.add(animeCharacter);
         animeCharacterList.add(animeCharacter2);
 
-        given(animeCharacterRepository.findCharactersByAnimeId(1)).willReturn(animeCharacterList);
+        given(animeCharacterRepository.findCharactersByAnimeName("Test")).willReturn(animeCharacterList);
 
-        mockMvc.perform(get("/characters/anime/{animeId}",1))
+        mockMvc.perform(get("/characters/anime/{animeName}","Test"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].animeId",is(1)))
+                .andExpect(jsonPath("$.[0].animeName",is("TestSerie")))
                 .andExpect(jsonPath("$.[0].name",is("Test")))
                 .andExpect(jsonPath("$.[0].gender",is(1)))
                 .andExpect(jsonPath("$.[0].birthday",is("12/08")))
-                .andExpect(jsonPath("$.[1].animeId",is(1)))
+                .andExpect(jsonPath("$.[1].animeName",is("TestSerie2")))
                 .andExpect(jsonPath("$.[1].name",is("Test2")))
                 .andExpect(jsonPath("$.[1].gender",is(0)))
                 .andExpect(jsonPath("$.[1].birthday",is("14/03")));
@@ -67,14 +67,14 @@ class AnimeCharacterControllerUnitTests {
      */
     @Test
     public void givenCharacter_whenGetCharacterByName_thenReturnJsonCharacter() throws Exception {
-        AnimeCharacter animeCharacter = new AnimeCharacter(3,"Test",1,"12/08");
+        AnimeCharacter animeCharacter = new AnimeCharacter("TestSerie","Test",1,"12/08");
 
         given(animeCharacterRepository.findAnimeCharacterByNameEquals("Test")).willReturn(animeCharacter);
 
         mockMvc.perform(get("/characters/{name}","Test"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.animeId",is(3)))
+                .andExpect(jsonPath("$.animeName",is("TestSerie")))
                 .andExpect(jsonPath("$.name",is("Test")))
                 .andExpect(jsonPath("$.gender",is(1)))
                 .andExpect(jsonPath("$.birthday",is("12/08")));
@@ -85,8 +85,8 @@ class AnimeCharacterControllerUnitTests {
      */
     @Test
     public void givenCharacter_whenGetCharactersByGender_thenReturnJsonCharacter() throws Exception {
-        AnimeCharacter animeCharacter = new AnimeCharacter(1,"Test",1,"12/08");
-        AnimeCharacter animeCharacter2 = new AnimeCharacter(2,"Test2",1,"14/03");
+        AnimeCharacter animeCharacter = new AnimeCharacter("TestSerie","Test",1,"12/08");
+        AnimeCharacter animeCharacter2 = new AnimeCharacter("TestSerie2","Test2",1,"14/03");
 
 
         List<AnimeCharacter> animeCharacterList = new ArrayList<>();
@@ -98,11 +98,11 @@ class AnimeCharacterControllerUnitTests {
         mockMvc.perform(get("/characters/gender/{gender}",1))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].animeId",is(1)))
+                .andExpect(jsonPath("$.[0].animeName",is("TestSerie")))
                 .andExpect(jsonPath("$.[0].name",is("Test")))
                 .andExpect(jsonPath("$.[0].gender",is(1)))
                 .andExpect(jsonPath("$.[0].birthday",is("12/08")))
-                .andExpect(jsonPath("$.[1].animeId",is(2)))
+                .andExpect(jsonPath("$.[1].animeName",is("TestSerie2")))
                 .andExpect(jsonPath("$.[1].name",is("Test2")))
                 .andExpect(jsonPath("$.[1].gender",is(1)))
                 .andExpect(jsonPath("$.[1].birthday",is("14/03")));
@@ -113,14 +113,14 @@ class AnimeCharacterControllerUnitTests {
      */
     @Test
     public void whenPostCharacter_thenReturnJsonCharacter() throws Exception{
-        AnimeCharacter animeCharacter = new AnimeCharacter(1,"Test",1,"12/08");
+        AnimeCharacter animeCharacter = new AnimeCharacter("TestSerie","Test",1,"12/08");
 
         mockMvc.perform(post("/characters")
                 .content(mapper.writeValueAsString(animeCharacter))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.animeId",is(1)))
+                .andExpect(jsonPath("$.animeName",is("TestSerie")))
                 .andExpect(jsonPath("$.name",is("Test")))
                 .andExpect(jsonPath("$.gender",is(1)))
                 .andExpect(jsonPath("$.birthday",is("12/08")));
@@ -131,12 +131,12 @@ class AnimeCharacterControllerUnitTests {
      */
     @Test
     public void givenReview_whenPutReview_thenReturnJsonReview() throws Exception{
-        AnimeCharacter animeCharacter = new AnimeCharacter(1,"Test",1,"12/08");
+        AnimeCharacter animeCharacter = new AnimeCharacter("TestSerie","Test",1,"12/08");
 
         given(animeCharacterRepository.findCharacterById(animeCharacter.getId())).willReturn(animeCharacter);
 
         AnimeCharacter updatedAnimeCharacter = animeCharacter;
-        updatedAnimeCharacter.setAnimeId(0);
+        updatedAnimeCharacter.setanimeName("TestSerie");
         updatedAnimeCharacter.setName("Test2");
         updatedAnimeCharacter.setGender(0);
         updatedAnimeCharacter.setBirthday("14/10");
@@ -147,7 +147,7 @@ class AnimeCharacterControllerUnitTests {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.animeId",is(0)))
+                .andExpect(jsonPath("$.animeName",is("TestSerie")))
                 .andExpect(jsonPath("$.name",is("Test2")))
                 .andExpect(jsonPath("$.gender",is(0)))
                 .andExpect(jsonPath("$.birthday",is("14/10")));
@@ -158,7 +158,7 @@ class AnimeCharacterControllerUnitTests {
      */
     @Test
     public void givenCharacter_whenDeleteCharacter_thenStatusOk() throws Exception{
-        AnimeCharacter animeCharacter = new AnimeCharacter(1,"Test",1,"12/08");
+        AnimeCharacter animeCharacter = new AnimeCharacter("TestSerie","Test",1,"12/08");
 
 
         given(animeCharacterRepository.findCharacterById("1")).willReturn(animeCharacter);
