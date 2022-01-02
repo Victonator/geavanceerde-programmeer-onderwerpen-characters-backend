@@ -10,7 +10,7 @@ public class AnimeCharacter {
     @Id
     private String id;
 
-    private int animeId;
+    private String animeName;
 
     private String name;
 
@@ -21,8 +21,8 @@ public class AnimeCharacter {
     public AnimeCharacter() {
     }
 
-    public AnimeCharacter(int animeId, String name, int gender, String birthday) {
-        this.animeId = animeId;
+    public AnimeCharacter(String animeName, String name, int gender, String birthday) {
+        this.animeName = animeName;
         this.name = name;
         this.gender = gender;
         this.birthday = birthday;
@@ -36,12 +36,12 @@ public class AnimeCharacter {
         this.id = id;
     }
 
-    public int getAnimeId() {
-        return animeId;
+    public String getanimeName() {
+        return animeName;
     }
 
-    public void setAnimeId(int animeId) {
-        this.animeId = animeId;
+    public void setanimeName(String animeName) {
+        this.animeName = animeName;
     }
 
     public String getName() {

@@ -25,8 +25,9 @@ class AnimeCharacterModelTests {
      */
     @Test
     void testConstructorEnGetters() {
-        AnimeCharacter animeCharacter = new AnimeCharacter(1,"Test",1,"12/08");
-        assertEquals(1, animeCharacter.getAnimeId());
+        AnimeCharacter animeCharacter = new AnimeCharacter("TestSerie","Test",1,"12/08");
+
+        assertEquals("TestSerie", animeCharacter.getanimeName());
         assertEquals("Test", animeCharacter.getName());
         assertEquals(1, animeCharacter.getGender());
         assertEquals("12/08", animeCharacter.getBirthday());
@@ -40,10 +41,13 @@ class AnimeCharacterModelTests {
     public void testSetters() {
         AnimeCharacter animeCharacter = new AnimeCharacter();
 
+
+        animeCharacter.setanimeName("TestSerie");
         animeCharacter.setName("Test");
         animeCharacter.setGender(1);
         animeCharacter.setBirthday("12/08");
 
+        assertEquals("TestSerie", animeCharacter.getanimeName());
         assertEquals("Test", animeCharacter.getName());
         assertEquals(1, animeCharacter.getGender());
         assertEquals("12/08", animeCharacter.getBirthday());

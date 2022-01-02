@@ -33,10 +33,10 @@ public class AnimeCharacterControllerIntegrationTest {
     /**
      * Create characters
      */
-    AnimeCharacter animeCharacter1 = new AnimeCharacter(1,"Test1",0,"12/08");
-    AnimeCharacter animeCharacter2 = new AnimeCharacter(2,"Test2",1,"12/08");
-    AnimeCharacter animeCharacter3 = new AnimeCharacter(2,"Test3",2,"14/10");
-    AnimeCharacter animeCharacter4 = new AnimeCharacter(1,"Test4",1,"14/10");
+    AnimeCharacter animeCharacter1 = new AnimeCharacter("TestSerie1","Test1",0,"12/08");
+    AnimeCharacter animeCharacter2 = new AnimeCharacter("TestSerie2","Test2",1,"12/08");
+    AnimeCharacter animeCharacter3 = new AnimeCharacter("TestSerie3","Test3",2,"14/10");
+    AnimeCharacter animeCharacter4 = new AnimeCharacter("TestSerie1","Test4",1,"14/10");
 
 
     /**
@@ -65,24 +65,24 @@ public class AnimeCharacterControllerIntegrationTest {
     ObjectMapper mapper = new ObjectMapper();
 
     /**
-     * Test of getCharacterByAnimeId.
+     * Test of getCharacterByanimeName.
      */
     @Test
-    public void givenCharacter_whenGetCharactersByAnimeId_thenReturnJsonCharacters() throws Exception {
+    public void givenCharacter_whenGetCharactersByAnimeName_thenReturnJsonCharacters() throws Exception {
 
         List<AnimeCharacter> characterList = new ArrayList<>();
         characterList.add(animeCharacter1);
         characterList.add(animeCharacter4);
 
-        mockMvc.perform(get("/characters/anime/{animeId}", 1))
+        mockMvc.perform(get("/characters/anime/{animeName}", "TestSerie1"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect((ResultMatcher) jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$.[0].animeId", is(1)))
+                .andExpect(jsonPath("$.[0].animeName", is("TestSerie1")))
                 .andExpect(jsonPath("$.[0].name", is("Test1")))
                 .andExpect(jsonPath("$.[0].gender", is(0)))
                 .andExpect(jsonPath("$.[0].birthday", is("12/08")))
-                .andExpect(jsonPath("$.[1].animeId", is(1)))
+                .andExpect(jsonPath("$.[1].animeName", is("TestSerie1")))
                 .andExpect(jsonPath("$.[1].name", is("Test4")))
                 .andExpect(jsonPath("$.[1].gender", is(1)))
                 .andExpect(jsonPath("$.[1].birthday", is("14/10")));
@@ -100,7 +100,7 @@ public class AnimeCharacterControllerIntegrationTest {
         mockMvc.perform(get("/characters/{name}", "Test1"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.animeId", is(1)))
+                .andExpect(jsonPath("$.animeName", is("TestSerie1")))
                 .andExpect(jsonPath("$.name", is("Test1")))
                 .andExpect(jsonPath("$.gender", is(0)))
                 .andExpect(jsonPath("$.birthday", is("12/08")));
@@ -120,11 +120,11 @@ public class AnimeCharacterControllerIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect((ResultMatcher) jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$.[0].animeId",is(2)))
+                .andExpect(jsonPath("$.[0].animeName",is("TestSerie2")))
                 .andExpect(jsonPath("$.[0].name",is("Test2")))
                 .andExpect(jsonPath("$.[0].gender",is(1)))
                 .andExpect(jsonPath("$.[0].birthday",is("12/08")))
-                .andExpect(jsonPath("$.[1].animeId",is(1)))
+                .andExpect(jsonPath("$.[1].animeName",is("TestSerie1")))
                 .andExpect(jsonPath("$.[1].name",is("Test4")))
                 .andExpect(jsonPath("$.[1].gender",is(1)))
                 .andExpect(jsonPath("$.[1].birthday",is("14/10")));
@@ -135,14 +135,14 @@ public class AnimeCharacterControllerIntegrationTest {
      */
     @Test
     public void whenPostCharacter_thenReturnJsonCharacter() throws Exception {
-        AnimeCharacter animeCharacter5 = new AnimeCharacter(3,"Test5",1,"15/05");
+        AnimeCharacter animeCharacter5 = new AnimeCharacter("TestSerie5","Test5",1,"15/05");
 
         mockMvc.perform(post("/characters")
                 .content(mapper.writeValueAsString(animeCharacter5))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.animeId",is(3)))
+                .andExpect(jsonPath("$.animeName",is("TestSerie5")))
                 .andExpect(jsonPath("$.name",is("Test5")))
                 .andExpect(jsonPath("$.gender",is(1)))
                 .andExpect(jsonPath("$.birthday",is("15/05")));
@@ -154,7 +154,7 @@ public class AnimeCharacterControllerIntegrationTest {
     @Test
     public void givencharacter_whenPutcharacter_thenReturnJsoncharacter() throws Exception {
 
-        AnimeCharacter updatedcharacter = new AnimeCharacter(3,"updateTest",1,"16/05");
+        AnimeCharacter updatedcharacter = new AnimeCharacter("TestSerie5","updateTest",1,"16/05");
         updatedcharacter.setId(animeCharacter3.getId());
 
         mockMvc.perform(put("/characters")
@@ -162,7 +162,7 @@ public class AnimeCharacterControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.animeId",is(3)))
+                .andExpect(jsonPath("$.animeName",is("TestSerie5")))
                 .andExpect(jsonPath("$.name",is("updateTest")))
                 .andExpect(jsonPath("$.gender",is(1)))
                 .andExpect(jsonPath("$.birthday",is("16/05")));
