@@ -24,11 +24,12 @@ public class AnimeCharacterController {
         if (animeCharacterRepository.count() == 0) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM");
             LocalDate date = LocalDate.now();
-            animeCharacterRepository.save(new AnimeCharacter("Attack on Titan","Mikasa Ackerman", 0, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter("Naruto","Naruto Uzumaki", 1, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter("My Hero Academia","Izuku Midoriya", 1, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter("Naruto","Sakura Haruno", 0, dtf.format(date)));
-            animeCharacterRepository.save(new AnimeCharacter("Attack on Titan","Eren Yeager", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Your name","Taki Tachibana", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Jujutsu Kaisen","Yuji Itadori", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Your name","Mitsuha Miyamizu", 0, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Jujutsu Kaisen","Megumi Fushiguro", 1, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Your name","Miki Okudera", 0, dtf.format(date)));
+            animeCharacterRepository.save(new AnimeCharacter("Jujutsu Kaisen","Nobara Kugisaki", 0, dtf.format(date)));
 
         }
     }
